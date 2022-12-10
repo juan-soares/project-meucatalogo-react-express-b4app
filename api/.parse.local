@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "meucatalogo"
+    },
+    "meucatalogo": {
+      "applicationId": "XYfmjwCKDVAngHh4mhwCxblzbEPuJ0yI9Yuqdkbi"
+    }
+  }
+}
