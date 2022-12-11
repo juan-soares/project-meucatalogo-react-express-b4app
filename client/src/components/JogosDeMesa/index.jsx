@@ -21,7 +21,7 @@ const JogosDeMesa = () => {
         <li>
           <details>
             <summary>ADICIONAR</summary>
-            <AdicionarNovoJogo />
+            <AdicionarNovoJogo getCollection={getCollection} />
           </details>
         </li>
         {jogosDeMesaLista.map((jogoDeMesa) => {
@@ -157,7 +157,7 @@ const JogosDeMesa = () => {
                   <li>
                     <b>Franquias: </b>
 
-                    {jogoDeMesa.franquia.map((franquia) => (
+                    {jogoDeMesa.franquias.map((franquia) => (
                       <>
                         <select disabled>
                           <option>{franquia.nome}</option>

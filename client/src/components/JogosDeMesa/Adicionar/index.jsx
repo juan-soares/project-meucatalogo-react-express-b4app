@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const AdicionarNovoJogo = () => {
+const AdicionarNovoJogo = ({ getCollection }) => {
   const [categoriasCollection, setCategoriasCollection] = useState([]);
   const [jogosDeMesaPropriedades, setJogosDeMesaPropriedades] = useState([]);
   const [jogosDeMesaCollection, setJogosDeMesaCollection] = useState([]);
@@ -14,10 +14,10 @@ const AdicionarNovoJogo = () => {
 
   const [novoJogo, setNovoJogo] = useState({
     nomeUsa: "",
-    nomeBra: "",
+    nomeBra: "?",
     lancamento: "",
-    sinopse: "",
-    playerMin: 1,
+    sinopse: "?",
+    playerMin: "",
     playerMax: "",
     players: [],
     modalidades: [],
@@ -35,6 +35,7 @@ const AdicionarNovoJogo = () => {
     anexos: [],
     adquirido: false,
     finalizado: false,
+    franquias: [],
   });
 
   useEffect(() => {
@@ -76,23 +77,45 @@ const AdicionarNovoJogo = () => {
 
   const handleChange = (e) => {
     novoJogo[e.target.name] = e.target.value;
+    let imagens = [];
+    let anexos = [];
 
     if (e.target.name === "modalidades" && e.target.checked) {
-      setModalidades([...modalidades, e.target.value]);
+      setModalidades((prev) => [...prev, e.target.value]);
     } else if (e.target.name === "expansoes" && e.target.checked) {
-      setExpansoes([...expansoes, e.target.value]);
+      setExpansoes((prev) => [...prev, e.target.value]);
     } else if (e.target.name === "tematicas" && e.target.checked) {
-      setTematicas([...tematicas, e.target.value]);
+      setTematicas((prev) => [...prev, e.target.value]);
     } else if (e.target.name === "franquias" && e.target.checked) {
       setFranquias([...franquias, e.target.value]);
+    } else if (e.target.name === "trailer") {
+      novoJogo.trailer = e.target.files[0].name;
+    } else if (e.target.name === "imagens") {
+      for (let i = 0; i < e.target.files.length; i++) {
+        imagens.push(e.target.files.item(i).name);
+      }
+      novoJogo.imagens = imagens;
+    } else if (e.target.name === "anexos") {
+      for (let i = 0; i < e.target.files.length; i++) {
+        anexos.push(
+          e.target.files.item(i).name.replaceAll(" ", "_").replaceAll("-", "_")
+        );
+      }
+      novoJogo.anexos = anexos;
     }
 
     novoJogo.modalidades = modalidades;
+    novoJogo.expansoes = expansoes;
+    novoJogo.tematicas = tematicas;
+    novoJogo.franquias = franquias;
+
     console.log(novoJogo);
     setNovoJogo(novoJogo);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const confirm = window.confirm("Deseja salvar?");
 
     if (!confirm) return;
@@ -103,28 +126,45 @@ const AdicionarNovoJogo = () => {
 
     setNovoJogo(novoJogo);
 
-    e.preventDefault();
-    window.alert("Salvo com Sucesso!");
+    const response = await fetch(
+      process.env.REACT_APP_API_URL + "/jogo-de-mesa",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(novoJogo),
+      }
+    );
+
+    window.alert(await response.json());
+
+    getCollection();
   };
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <label>Nome Usa: </label>
-      <input type="text" name="nomeUsa" onChange={handleChange} />
+      <input type="text" name="nomeUsa" onChange={handleChange} required />
       <br />
       <label>Nome BRA: </label>
       <input type="text" name="nomeBra" onChange={handleChange} />
       <br />
       <label>Lançamento: </label>
-      <input type="date" name="lancamento" onChange={handleChange} />
+      <input type="date" name="lancamento" onChange={handleChange} required />
       <br />
       <label>Sinopse: </label>
       <textarea name="sinopse" onChange={handleChange}></textarea>
       <br />
       <label>Players: </label>
       Min:{" "}
-      <input type="number" min="1" name="playerMin" onChange={handleChange} />
-      Max: <input type="number" name="playerMax" onChange={handleChange} />
+      <input
+        type="number"
+        min="1"
+        name="playerMin"
+        onChange={handleChange}
+        required
+      />
+      Max:{" "}
+      <input type="number" name="playerMax" onChange={handleChange} required />
       <br />
       <details>
         <summary>Modalidades:</summary>
@@ -145,13 +185,13 @@ const AdicionarNovoJogo = () => {
         </ul>
       </details>
       <label>Imagens: </label>
-      <input type="file" multiple />
+      <input type="file" multiple name="imagens" onChange={handleChange} />
       <br />
       <label>Trailer: </label>
-      <input type="file" name="trailer" onChange={handleChange} />
+      <input type="file" name="trailer" onChange={handleChange} required />
       <br />
       <label>Categoria: </label>
-      <select name="categoria" onChange={handleChange}>
+      <select name="categoria" onChange={handleChange} required>
         <option hidden>Selecione...</option>
         {categoriasCollection.map((categoria) => (
           <option value={categoria._id}>{categoria.nome}</option>
@@ -159,7 +199,7 @@ const AdicionarNovoJogo = () => {
       </select>
       <br />
       <label>Subcategoria: </label>
-      <select name="subcategoria" onChange={handleChange}>
+      <select name="subcategoria" onChange={handleChange} required>
         <option hidden>Selecione...</option>
         {jogosDeMesaPropriedades.subcategorias?.map((subcategoria) => (
           <option value={subcategoria._id}>{subcategoria.nome}</option>
@@ -167,7 +207,7 @@ const AdicionarNovoJogo = () => {
       </select>
       <br />
       <label>Idioma: </label>
-      <select name="idioma" onChange={handleChange}>
+      <select name="idioma" onChange={handleChange} required>
         <option hidden>Selecione...</option>
         {jogosDeMesaPropriedades.idiomas?.map((idioma) => (
           <option value={idioma._id}>{idioma.nome}</option>
@@ -261,7 +301,7 @@ const AdicionarNovoJogo = () => {
         </ul>
       </details>
       <label>Anexos: </label>
-      <input type="file" multiple />
+      <input type="file" multiple name="anexos" onChange={handleChange} />
       <br />
       <label>Adquirido: </label>
       <input

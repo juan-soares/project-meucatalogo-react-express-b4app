@@ -43,10 +43,12 @@ const jogoDeMesaSchema = new mongoose.Schema({
       ref: "Tematica",
     },
   ],
-  modalidade: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Modalidade",
-  },
+  modalidades: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Modalidade",
+    },
+  ],
   genero: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Genero",
@@ -56,7 +58,7 @@ const jogoDeMesaSchema = new mongoose.Schema({
     ref: "Movimentacao",
   },
 
-  franquia: [
+  franquias: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Franquia",
