@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/project-meucatalogo-express-b4app/static/css/main.7fafd408.css",
-    "main.js": "/project-meucatalogo-express-b4app/static/js/main.86d6e85b.js",
+    "main.js": "/project-meucatalogo-express-b4app/static/js/main.fe987fc0.js",
     "index.html": "/project-meucatalogo-express-b4app/index.html",
     "main.7fafd408.css.map": "/project-meucatalogo-express-b4app/static/css/main.7fafd408.css.map",
-    "main.86d6e85b.js.map": "/project-meucatalogo-express-b4app/static/js/main.86d6e85b.js.map"
+    "main.fe987fc0.js.map": "/project-meucatalogo-express-b4app/static/js/main.fe987fc0.js.map"
   },
   "entrypoints": [
     "static/css/main.7fafd408.css",
-    "static/js/main.86d6e85b.js"
+    "static/js/main.fe987fc0.js"
   ]
 }
