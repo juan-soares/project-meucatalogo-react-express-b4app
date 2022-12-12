@@ -29,7 +29,7 @@ const Categorias = () => {
     if (!confirm) return;
 
     const serverResponse = await fetch(
-      `${process.env.REACT_APP_API_URL}/categorias`,
+      `${process.env.REACT_APP_API_URL}/categoria`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
