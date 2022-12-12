@@ -1,5 +1,5 @@
 {
-  "homepage": "https://juan-soares.github.io/project-meucatalogo-express-b4app",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
