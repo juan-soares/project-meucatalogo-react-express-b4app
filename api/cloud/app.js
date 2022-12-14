@@ -1,10 +1,10 @@
 //Comentar Linha1 até Linha7 quando for fazer deploy p/ b4pp
-const express = require("express");
+/* const express = require("express");
 const cors = require("cors");
 const app = express();
 
 app.use(express.static("public"));
-app.use(cors());
+app.use(cors()); */
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());

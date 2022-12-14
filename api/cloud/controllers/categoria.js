@@ -33,7 +33,6 @@ async function getCategoria(req, res) {
 }
 
 async function postCategoria(req, res) {
-
   if (req.body.categoria) {
     const novaCategoria = new Categoria({ nome: req.body.categoria.nome });
     try {

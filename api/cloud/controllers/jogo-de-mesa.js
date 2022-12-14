@@ -45,14 +45,13 @@ async function postJogoDeMesa(req, res) {
     edicao: req.body.edicao,
     expansoes: req.body.expansoes,
     genero: req.body.genero,
-    //movimentacao: req.body.movimentacao,
+    movimentacao: req.body.movimentacao,
     tematicas: req.body.tematicas,
     adquirido: req.body.adquirido,
     finalizado: req.body.finalizado,
     franquias: req.body.franquias,
   });
 
-  
   if (req.body.base === "") {
     baseId = novoJogo._id;
     novoJogo.base = baseId;
@@ -95,6 +94,7 @@ async function postJogoDeMesa(req, res) {
           process.env.API_URL +
           "/assets/jogos-de-mesa/" +
           novoJogo.nomeUsa
+            .toLowerCase()
             .replaceAll(": ", "-")
             .replaceAll(" - ", "-")
             .replaceAll(" ", "-") +
@@ -110,7 +110,7 @@ async function postJogoDeMesa(req, res) {
     res.json("Salvo com Sucesso!");
   } catch (error) {
     res.json("Não foi possivel salvar: " + error);
-  } 
+  }
 }
 
 async function deleteJogoDeMesa(req, res) {

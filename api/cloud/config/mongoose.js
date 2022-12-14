@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //Deixar comentado quando for fazer deploy p/ b4pp
-require("dotenv").config();
+//require("dotenv").config();
 
 
 mongoose
