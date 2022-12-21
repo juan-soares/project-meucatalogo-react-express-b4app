@@ -10,7 +10,7 @@ const Franquias = () => {
 
   async function updateCollection() {
     const collectionFetch = await fetch(
-      "${process.env.REACT_APP_API_URL}/franquias"
+      `${process.env.REACT_APP_API_URL}/franquias`
     );
 
     setFranquiasLista(await collectionFetch.json());
@@ -28,7 +28,7 @@ const Franquias = () => {
     if (!confirm) return;
 
     const serverResponse = await fetch(
-      "${process.env.REACT_APP_API_URL}/franquias",
+      `${process.env.REACT_APP_API_URL}/franquias,
       {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
